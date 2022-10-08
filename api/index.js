@@ -36,6 +36,20 @@ mongoose.connection.on("disconnected", () => {
 });
 
 //middlewares
+
+const corsOptions = {
+  /*origin can't be wildcard ('*') when sending credentials*/
+  origin: [process.env.REACT_APP_FRONTEND,process.env.REACT_APP_BACKEND,"http://localhost:3000","http://localhost:8000"],
+  optionsSuccessStatus: 200, // some legacy borwsers choke on 204 (IE11 & various SmartTVs)
+  /* 
+      Below sets Access-Control-Allow-Credentials to true for cross origin credentials sharing.
+      In this case it is used to get cookies, for express-session.
+  */
+  credentials: true,
+};
+
+app.use(cors(corsOptions))
+
 app.use(express.json()); /*This is an inbuilt method in express to recognize the incoming request as a JSON object.*/
 app.use(cookieParser());
 /*
@@ -66,7 +80,7 @@ app.use((err, req, res, next) => {
 
 /* app. listen() function is used to bind and listen the connections on the specified port. Basically it provides a medium through
 which users can interact with the server and post his/her request.*/
-app.listen(8800, () => {
+app.listen(5000, () => {
   connect();
   console.log("Connected to backend.");
 });

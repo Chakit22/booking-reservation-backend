@@ -21,7 +21,12 @@ export const register = async (req, res, next) => {
     const new_user = await newUser.save();
     /*new_user stores the newly added user's information. */
     console.log(new_user);
-    res.status(200).send("User has been created.");
+    res.status(200).json({
+      success: true,
+      status: 200,
+      message: 'user has been created',
+    });
+    
     /*The above statement is same as 
     res.status(200);
     res.send("User has been created"); */
