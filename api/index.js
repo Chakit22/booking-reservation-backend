@@ -51,7 +51,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 app.use(express.json()); /*This is an inbuilt method in express to recognize the incoming request as a JSON object.*/
-app.use(cookieParser());
+app.use(cookieParser())
 /*
 app.use((req,res,next) => {
   console.log("Hii Iam a middleware");
