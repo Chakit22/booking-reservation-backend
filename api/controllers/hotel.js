@@ -31,8 +31,7 @@ export const updateHotel = async (req, res, next) => {
 
       { new: true }
 
-      /*new method when set to true basically while using Insomnia or Postman will also update the Hotel while 
-      showing the output in Insomnia or Postman.*/
+      /*new is used as findByIdand Update will return the previous document and not the updated one. */
     );
     res.status(200).json(updatedHotel);
     /*.json converts json into Javascript Object.*/
@@ -67,7 +66,7 @@ featured or which have the price range entered by the user.*/
 export const getHotels = async (req, res, next) => {
   console.log("getHotels middleware in controllers called.\n");
   const { min, max, ...others } = req.query;
-
+  /*By default themin and max values are set from 1 to 999.*/
   /*Used a destructor to destruct the min and max key value pairs from the URL entered.*/
 
   try {
@@ -134,6 +133,20 @@ export const countByType = async (req, res, next) => {
       { type: "cabin", count: cabinCount },
       /*This is returning a JSON Format File with the key value pair.*/
     ]);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getHotelRooms = async (req, res, next) => {
+  try {
+    const hotel = await Hotel.findById(req.params.id);
+    const list = await Promise.all(
+      hotel.rooms.map((room) => {
+        return Room.findById(room);
+      })
+    );
+    res.status(200).json(list)
   } catch (err) {
     next(err);
   }

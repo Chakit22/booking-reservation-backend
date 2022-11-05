@@ -50,6 +50,7 @@ export const verifyAdmin = (req, res, next) => {
   console.log("verifyAdmin middleware in utils called.\n");
   verifyToken(req, res, next, () => {
     if (req.user.isAdmin) {
+      console.log("You are an Admin");
       next();
     } else {
       return next(createError(403, "You are not authorized!"));

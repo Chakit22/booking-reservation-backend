@@ -14,6 +14,7 @@ router.post("/:hotelid", verifyAdmin, createRoom);
 /*Instead of 'hotelid' you can even write 'id' and that will be displayed when you console.log(req.params). */
 
 //UPDATE
+router.put("/availability/:id", updateRoomAvailability);
 router.put("/:id", verifyAdmin, updateRoom);
 
 

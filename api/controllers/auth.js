@@ -7,6 +7,7 @@ export const register = async (req, res, next) => {
   /*This is again a middleware which is an arrow function. A middleware always accepts three parameters, request,response and next.*/
   console.log("register middleware in controllers called.\n");
   try {
+    // console.log(req.body);
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     // console.log(hash);
@@ -17,7 +18,7 @@ export const register = async (req, res, next) => {
     });
     /*We haven't directly passed req.body as I am using this hashed
     password. */
-
+    // console.log(newUser);
     const new_user = await newUser.save();
     /*new_user stores the newly added user's information. */
     console.log(new_user);
@@ -38,6 +39,7 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   console.log("login middleware in controllers called.\n");
   try {
+    // console.log(req.body);
     const user = await User.findOne({ username: req.body.username });
     /*This finds by the user with the username entered and stores the user info in user variable.*/
     // console.log(user);
@@ -68,8 +70,7 @@ export const login = async (req, res, next) => {
     on the browser and when the same user again requests something the same cookie is sent back
     to the server and the server validates it and displays personalized content to that 
     particular user.*/
-    res
-      .cookie("access_token", token, {
+    res.cookie("access_token", token, {
         httpOnly: true,
       })
       .status(200)
